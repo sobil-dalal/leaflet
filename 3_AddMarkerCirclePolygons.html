@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>3 - Add markers/circles/polygons on map</title>
+    <link rel="stylesheet" href="leaflet.css" />
+    <script src="leaflet.js"></script>
+    <link href="mapPage.css" rel="stylesheet">
+  </head>
+  <body style="background-color:powderblue;">
+    <h1>3 - Add markers/circles/polygons on map</h1>
+    <div class="mapSelectionDiv">
+      <a href="0_Home.html">Home</a>
+      <hr/>
+      <button id="baseMapBtn" class="baseMapBtn" onclick="baseMap();">Click to load Map</button>
+      <div id="mapLayer" class="map-filter">
+        <hr/>
+        <input type="checkbox" name="chk_bike" id="chk_bike" onclick="bikeLayer();"><a class="layers">Bike Layer</a>
+        <input type="checkbox" name="chk_marker" id="chk_marker" onclick="markerLayer();"><a class="layers">Marker Layer</a>
+        <input type="checkbox" name="chk_circle" id="chk_circle" onclick="circleLayer();"><a class="layers">Circle Layer</a>
+        <input type="checkbox" name="chk_polygon" id="chk_polygon" onclick="polygonLayer();"><a class="layers">Polygon Layer</a>
+        <hr/>
+      </div>
+      <div id="divMap" class="divMap"></div>
+    </div>
+    <script>
+      var map = createMap();
+      var baseTile, bikeLaneTile, markerGroup, circle, polygon;
+      
+      // create map object
+      function createMap() {
+      // initialize the map
+        var map = L.map('divMap').setView([42.35, -71.08], 11);
+        return map;
+      }  
+
+
+      //create base map layer
+      function baseMap() {
+      document.getElementById("mapLayer").classList.toggle("show");
+      document.getElementById("divMap").classList.toggle("show");
+      
+        // loading the base tile layer
+        // Create a varible of primary/ base tile
+        baseTile = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer/tile/{z}/{y}/{x}', {
+            attribution: 'Tiles &copy; Esri &mdash; National Geographic, Esri, DeLorme, NAVTEQ, UNEP-WCMC, USGS, NASA, ESA, METI, NRCAN, GEBCO, NOAA, iPC',
+            maxZoom: 19,
+            minZoom: 1
+          });
+        //Adding the base tile to the map-
+        map.addLayer(baseTile);
+      }
+      
+
+      function bikeLayer() {
+        // Create a tile for bike lanes -
+        var chk_bike= document.getElementById("chk_bike");       
+        if(chk_bike.checked == true){
+          bikeLaneTile = L.tileLayer('http://tiles.mapc.org/trailmap-onroad/{z}/{x}/{y}.png',{
+              maxZoom: 19,
+              minZoom: 1
+            });
+          map.addLayer(bikeLaneTile);
+        } else {
+          map.removeLayer(bikeLaneTile);
+        }
+      }
+
+      function markerLayer() {
+        var chk_marker= document.getElementById("chk_marker");       
+        if(chk_marker.checked == true){
+          var marker1 = L.marker([42.36, -71.10]);
+          var marker2 = L.marker([42.40, -71.30]);
+          markerGroup = L.layerGroup([marker1,marker2]);
+          map.addLayer(markerGroup);
+        } else {
+          map.removeLayer(markerGroup);
+        }
+      }
+
+      function circleLayer() {
+        var chk_circle= document.getElementById("chk_circle");       
+        if(chk_circle.checked == true){
+          circle = L.circle([42.36, -71.11], {
+              color: 'red',
+              fillColor: '#f03',
+              fillOpacity: 0.3,
+              radius: 1000
+            });
+          map.addLayer(circle);
+        } else {
+          map.removeLayer(circle);
+        }
+      }
+
+      function polygonLayer() {
+        var chk_polygon= document.getElementById("chk_polygon");       
+        if(chk_polygon.checked == true){
+          polygon = L.polygon([
+              [42.44, -71.08],
+              [42.42, -71.09],
+              [42.42, -71.06],
+              [42.44, -71.03]
+            ], {
+              color: 'green',
+              fillColor: 'green',
+              fillOpacity: 0.3
+            });
+          map.addLayer(polygon);
+        } else {
+          map.removeLayer(polygon);
+        }
+      }
+      
+    </script>
+  </body>
+</html>

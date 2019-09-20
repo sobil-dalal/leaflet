@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>7 - Using GeoJson Object</title>
+    <link rel="stylesheet" href="leaflet.css" />
+    <script src="leaflet.js"></script>
+    <script src="iconsMap.js"></script>
+    <link href="mapPage.css" rel="stylesheet">
+  </head>
+  <body style="background-color:powderblue;">
+    <h1>7 - Using GeoJson Object and style function</h1>
+    <div class="mapSelectionDiv">
+      <a href="0_Home.html">Home</a>
+      <hr/>
+      <button id="baseMapBtn" class="baseMapBtn" onclick="baseMap();">Click to load Map</button>
+      <div id="mapLayer" class="map-filter">
+        <hr/>
+        <input type="checkbox" name="chk_marker" id="chk_marker" onclick="markerLayer();"><a class="layers">Marker Layer</a>
+        <input type="checkbox" name="chk_circle" id="chk_circle" onclick="circleLayer();"><a class="layers">Circle Layer</a>
+        <input type="checkbox" name="chk_polygon" id="chk_polygon" onclick="polygonLayer();"><a class="layers">Polygon Layer</a>
+        <hr/>
+      </div>
+      <div id="divMap" class="divMap"></div>
+    </div>
+    <script>
+      var map = createMap();
+      var baseTile, markerGroup, circleGroup, polygonGroup, currentLocationMarker;
+      map.on('click', currentLocationMapClick);
+      
+      // create map object
+      function createMap() {
+      // initialize the map
+        var map = L.map('divMap').setView([25.60, 85.14], 10);
+        return map;
+      }  
+
+
+      //create base map layer
+      function baseMap() {
+      document.getElementById("mapLayer").classList.toggle("show");
+      document.getElementById("divMap").classList.toggle("show");
+      
+        // loading the base tile layer
+        // Create a varible of primary/ base tile
+        baseTile = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer/tile/{z}/{y}/{x}', {
+            attribution: 'Tiles &copy; Esri &mdash; National Geographic, Esri, DeLorme, NAVTEQ, UNEP-WCMC, USGS, NASA, ESA, METI, NRCAN, GEBCO, NOAA, iPC',
+            maxZoom: 12,
+            minZoom: 1
+          });
+        //Adding the base tile to the map-
+        map.addLayer(baseTile);
+      }
+      
+
+      function markerLayer() {
+        var chk_marker= document.getElementById("chk_marker");       
+        if(chk_marker.checked == true){
+          var marker1 = L.marker([25.60, 85.14],{icon:hqIcon});
+          var marker2 = L.marker([25.70, 85.50]);
+          markerGroup = L.layerGroup([marker1,marker2]);
+          map.addLayer(markerGroup);
+          marker1.bindPopup("<b>Dehaat Centre 1 (Patna)</b><br>Head Quater Patna.").openPopup();
+          marker2.bindPopup("<b>Dehaat Node 1 (Patna)</b><br>Node Tal Baraila");
+        } else {
+          map.removeLayer(markerGroup);
+        }
+      }
+
+      function circleLayer() {
+        var chk_circle= document.getElementById("chk_circle");       
+        if(chk_circle.checked == true){
+          var circle1 = L.circle([25.60, 85.14], {
+              color: 'red',
+              fillColor: '#f03',
+              fillOpacity: 0.3,
+              radius: 15000
+            });
+          var circle2 = L.circle([25.70, 85.50], {
+              color: 'red',
+              fillColor: '#f03',
+              fillOpacity: 0.3,
+              radius: 7500
+            });
+          circleGroup = L.layerGroup([circle1,circle2]);
+          map.addLayer(circleGroup);
+          circle1.bindPopup("<b>Dehaat Servicing Area Head Quater (Patna)</b><br>Servicing area of Dehaat Head Quater 1");
+          circle2.bindPopup("<b>Dehaat Servicing Area Node1</b><br>Servicing area of Node Tal Baraila");
+        } else {
+          map.removeLayer(circleGroup);
+        }
+      }
+
+
+      function polygonLayer() {
+        var chk_polygon= document.getElementById("chk_polygon");       
+        if(chk_polygon.checked == true){
+          var polygonGeoJson = [{
+            "type": "Feature",
+            "properties": {"name": "HQ",
+                            "popupContent": "<b>Dehaat Bihar State (Patna HQ) Inventory",
+                            "show_on_map": true
+                          },
+            "geometry": {
+              "type": "Polygon",
+              "coordinates": [[
+                [85.05, 25.40],
+                [85.05, 25.59],
+                [85.22, 25.59],
+                [85.14, 25.40],
+                [85.05, 25.40]
+              ]]
+            }
+          }, {
+            "type": "Feature",
+            "properties": {"name": "Node",
+                            "popupContent": "<b>Dehaat Node 1 Inventory",
+                            "show_on_map": false
+                          },
+            "geometry": {
+              "type": "Polygon",
+              "coordinates": [[
+                [85.475, 25.60],
+                [85.455, 25.695],
+                [85.51, 25.695],
+                [85.50, 25.60],
+                [85.475, 25.60]
+              ]]
+            }
+          }];
+          polygonGroup = L.geoJSON(polygonGeoJson, {style: polygonsStyle,
+                                                    onEachFeature: onEachFeature,
+                                                    filter: filterFeature});
+          map.addLayer(polygonGroup);
+        } else {
+          map.removeLayer(polygonGroup);
+        }
+      }
+
+      
+      function polygonsStyle(feature){
+        switch (feature.properties.name) {
+          case 'HQ':
+            return {color: "#33cc33"};
+          case 'Node':
+            return {color: "#0000ff"};
+        }
+      }
+
+
+      function currentLocationMapClick(e) {
+        if(currentLocationMarker){
+          map.removeLayer(currentLocationMarker);
+        }
+        currentLocationMarker = L.marker(e.latlng,{icon:currentLocationIcon});
+        currentLocationMarker.bindPopup("<b>Current loaction</b><br>Nearest Dehaat Head Quater is Patna.");
+        map.addLayer(currentLocationMarker);        
+      }
+
+
+      function onEachFeature(feature, layer) {
+        // does this feature have a property named popupContent?
+        if (feature.properties && feature.properties.popupContent) {
+          layer.bindPopup(feature.properties.popupContent);
+        }
+      }
+
+      //filter the feature based on property
+      function filterFeature(feature, layer) {
+        return feature.properties.show_on_map;
+      }
+      
+      
+    </script>
+  </body>
+</html>

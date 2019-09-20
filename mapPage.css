@@ -1,0 +1,77 @@
+.divMap {
+  height: 65vh;
+  max-width: 90vw;
+  background-color: white;
+  visibility: hidden;
+}
+
+.baseMapBtn {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+.mapSelectionDiv {
+  position: relative;
+  height: 100%;
+  width: 95%;
+  background-color: powderblue;
+  padding: 16px;
+}
+
+.map-filter {
+  visibility: hidden;
+  min-width: 160px;
+}
+
+.layers {
+  color: black;
+  padding: 5px 10px 5px 10px;
+  background-color: #ffff99;
+  text-decoration: none;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.map-filter a:hover {background-color: #f1f1f1}
+
+.show {visibility: visible;}
+
+.info {
+  padding: 6px 8px;
+  font: 14px/16px Arial, Helvetica, sans-serif;
+  background: white;
+  background: rgba(255,255,255,0.8);
+  box-shadow: 0 0 15px rgba(0,0,0,0.2);
+  border-radius: 5px;
+}
+
+.info h4 {
+  margin: 0 0 5px;
+  color: #777;
+}
+
+.legend {
+  line-height: 18px;
+  color: #555;
+}
+.legend i {
+  width: 18px;
+  height: 18px;
+  float: left;
+  margin-right: 8px;
+  opacity: 0.7;
+}
+
+table, th, td {
+  border-collapse: collapse;
+  text-align: left;   
+}
+th, td {
+  width: 100%;
+  text-align: left;
+  padding: 0px 5px 0px 5px;
+}

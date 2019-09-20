@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>2 - Load Google map</title>
+    <link rel="stylesheet" href="leaflet.css" />
+    <script src="leaflet.js"></script>
+    <link href="mapPage.css" rel="stylesheet">
+  </head>
+  <body style="background-color:powderblue;">
+    <h1>2 - Load Google map</h1>
+    <div class="mapSelectionDiv">
+      <a href="0_Home.html">Home</a>
+      <hr/>
+      <button id="baseMapBtn" class="baseMapBtn" onclick="baseMap();">Click to load Google Map</button>
+      <div id="divMap" class="divMap"></div>
+    </div>
+    <script>
+      var map = createMap();
+      var googleLayer;
+
+      // create map object
+      function createMap() {
+      // initialize the map
+        var map = L.map('divMap').setView([25.60, 85.14], 11);
+        return map;
+      }      
+      
+      //create base map layer
+      function baseMap() {
+      document.getElementById("divMap").classList.toggle("show");
+      
+        // loading the base tile layer
+        // Create a varible of primary/ base tile
+        baseTile =  L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
+          maxZoom: 20,
+          attribution: '&copy; Openstreetmap France | &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        });
+        //Adding the base tile to the map-
+        map.addLayer(baseTile);
+      }
+
+      var states = [{
+          "type": "Feature",
+          "properties": {"party": "Republican"},
+          "geometry": {
+            "type": "Polygon",
+            "coordinates": [[
+                [84.98, 25.64],
+                [85.18, 25.59],
+                [85.18, 25.48],
+                [84.98, 25.51],
+                [84.98, 25.64]
+            ]]
+          }
+        }, {
+          "type": "Feature",
+          "properties": {"party": "Democrat"},
+          "geometry": {
+            "type": "Polygon",
+            "coordinates": [[
+                [85.50, 25.70],
+                [85.70, 25.70],
+                [85.71, 25.95],
+                [85.37, 26.02],
+                [85.50, 25.70]
+            ]]
+          }
+        }];
+
+        L.geoJSON(states, {
+          style: function(feature) {
+            switch (feature.properties.party) {
+              case 'Republican': return {color: "#ff0000"};
+              case 'Democrat':   return {color: "#0000ff"};
+            }
+          }
+        }).addTo(map);
+
+    </script>
+  </body>
+</html>
