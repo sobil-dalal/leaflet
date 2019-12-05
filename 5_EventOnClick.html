@@ -128,8 +128,8 @@
           map.removeLayer(currentLocationMarker);
         }
         currentLocationMarker = L.marker(e.latlng,{icon:currentLocationIcon});
-        currentLocationMarker.bindPopup("<b>Current loaction</b><br>Nearest Dehaat Head Quater is Patna.");
-        map.addLayer(currentLocationMarker);        
+        map.addLayer(currentLocationMarker);
+        currentLocationMarker.bindPopup("<b>Current loaction</b><br>Nearest Dehaat Head Quater is Patna.").openPopup();        
       }
       
     </script>
