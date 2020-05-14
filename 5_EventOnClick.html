@@ -7,7 +7,7 @@
     <script src="iconsMap.js"></script>
     <link href="mapPage.css" rel="stylesheet">
   </head>
-  <body style="background-color:powderblue;">
+  <body style="background-color:#6699ff;">
     <h1>5 - Event On Click & Custom markers</h1>
     <div class="mapSelectionDiv">
       <a href="0_Home.html">Home</a>
@@ -59,8 +59,8 @@
           var marker2 = L.marker([25.70, 85.50]);
           markerGroup = L.layerGroup([marker1,marker2]);
           map.addLayer(markerGroup);
-          marker1.bindPopup("<b>Dehaat Centre 1 (Patna)</b><br>Head Quater Patna.").openPopup();
-          marker2.bindPopup("<b>Dehaat Node 1 (Patna)</b><br>Node Tal Baraila");
+          marker1.bindPopup("<b>Centre 1 </b><br>Head Quater.").openPopup();
+          marker2.bindPopup("<b>Node 1 </b><br>Node Tal Baraila");
         } else {
           map.removeLayer(markerGroup);
         }
@@ -83,8 +83,8 @@
             });
           circleGroup = L.layerGroup([circle1,circle2]);
           map.addLayer(circleGroup);
-          circle1.bindPopup("<b>Dehaat Servicing Area Head Quater (Patna)</b><br>Servicing area of Dehaat Head Quater 1");
-          circle2.bindPopup("<b>Dehaat Servicing Area Node1</b><br>Servicing area of Node Tal Baraila");
+          circle1.bindPopup("<b>Servicing Area Head Quater </b><br>Servicing area of Head Quater 1");
+          circle2.bindPopup("<b>Servicing Area Node1</b><br>Servicing area of Node Tal Baraila");
         } else {
           map.removeLayer(circleGroup);
         }
@@ -116,8 +116,8 @@
             });
           polygonGroup = L.layerGroup([polygon1,polygon2]);
           map.addLayer(polygonGroup);
-          polygon1.bindPopup("<b>Dehaat Bihar State (Patna HQ) Inventory");
-          polygon2.bindPopup("<b>Dehaat Node 1 Inventory");
+          polygon1.bindPopup("<b>State (HQ) Inventory");
+          polygon2.bindPopup("<b>Node 1 Inventory");
         } else {
           map.removeLayer(polygonGroup);
         }
@@ -129,7 +129,7 @@
         }
         currentLocationMarker = L.marker(e.latlng,{icon:currentLocationIcon});
         map.addLayer(currentLocationMarker);
-        currentLocationMarker.bindPopup("<b>Current loaction</b><br>Nearest Dehaat Head Quater is Patna.").openPopup();        
+        currentLocationMarker.bindPopup("<b>Current loaction</b><br>Nearest Head Quater.").openPopup();        
       }
       
     </script>

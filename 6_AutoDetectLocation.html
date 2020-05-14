@@ -7,7 +7,7 @@
     <script src="iconsMap.js"></script>
     <link href="mapPage.css" rel="stylesheet">
   </head>
-  <body style="background-color:powderblue;">
+  <body style="background-color:#6699ff;">
     <h1>6 - Auto-detect location (Desktop/Mobile)</h1>
     <div class="mapSelectionDiv">
       <a href="0_Home.html">Home</a>
@@ -61,8 +61,8 @@
           var marker2 = L.marker([28.5576, 77.3949]);
           markerGroup = L.layerGroup([marker1,marker2]);
           map.addLayer(markerGroup);
-          marker1.bindPopup("<b>Dehaat IT Head office</b><br>Information Tech Head office Gurugram.").openPopup();
-          marker2.bindPopup("<b>Dehaat purposed new Node</b><br>Pusposed new Node Gurugram");
+          marker1.bindPopup("<b>Current location</b><br>").openPopup();
+          marker2.bindPopup("<b>Current location purposed new Node</b><br>");
         } else {
           map.removeLayer(markerGroup);
         }
@@ -85,8 +85,8 @@
             });
           circleGroup = L.layerGroup([circle1,circle2]);
           map.addLayer(circleGroup);
-          circle1.bindPopup("<b>Dehaat IT Head office area</b><br>Office 504,505,506");
-          circle2.bindPopup("<b>Dehaat Servicing Area of purposed Node Gurugram</b><br>Servicing area of Node Gurugram");
+          circle1.bindPopup("<b>Current location area</b><br>Loc 504,505,506");
+          circle2.bindPopup("<b>Current location Servicing Area of purposed Node Gurugram</b><br>Servicing area of Node");
         } else {
           map.removeLayer(circleGroup);
         }
@@ -101,7 +101,7 @@
           map.removeLayer(currentLocationAccuracy);
         }
         currentLocationMarker = L.marker(e.latlng,{icon:currentLocationIcon});
-        currentLocationMarker.bindPopup("<b>Current loaction</b><br>Nearest Dehaat Head Quater is Patna.");
+        currentLocationMarker.bindPopup("<b>Current loaction</b><br>Nearest Head Quater.");
         map.addLayer(currentLocationMarker);        
       }
 
